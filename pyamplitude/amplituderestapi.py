@@ -6,7 +6,7 @@ import logging
 import sys
 import simplejson as json
 from datetime import datetime
-from pyamplitude.apiresources import Segment, Event
+from .apiresources import Segment, Event
 
 
 class AmplitudeRestApi(object):
