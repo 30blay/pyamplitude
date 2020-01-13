@@ -23,10 +23,10 @@ class AmplitudeRestApi(object):
 
     ERROR_CODES = ['401','400','429','500']
 
-    def __init__(self, project_handler, show_logs, show_query_cost):
+    def __init__(self, project_handler, show_logs, show_query_cost, api_url='https://amplitude.com/api/2/'):
 
         self.project_handler = project_handler
-        self.api_url         = 'https://amplitude.com/api/2/'
+        self.api_url         = api_url
         self.logger          = self._logger_config(show_logs)
         self.show_query_cost = show_query_cost
 
