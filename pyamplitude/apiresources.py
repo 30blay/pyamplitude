@@ -3,6 +3,7 @@
 
 import json
 
+
 class Segment(object):
     """Creates a segment object for the AmplitudeRestApi class"""
     def __init__(self):
