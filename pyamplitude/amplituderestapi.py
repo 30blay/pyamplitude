@@ -131,14 +131,14 @@ class AmplitudeRestApi(object):
 
         error_message = 'Pyamplitude Error: ' + str(response.text)
 
-        if response.status_code not in AmplitudeRestApi.ERROR_CODES:
+        if str(response.status_code) not in AmplitudeRestApi.ERROR_CODES:
             data = json.loads(response.text)
             return data
         else:
             error_message = 'Pyamplitude Error: An error ocurred when decoding requests response to json'
             self.logger.warn(error_message)
 
-            raise Exception(error_message)
+            raise Exception(error_message + ' ' + response.reason)
 
     def _validate_group_by_clause(self, segment_definitions, group_by):
         """ Group by clause validation """
@@ -407,7 +407,7 @@ class AmplitudeRestApi(object):
                                                     segment_definitions = segment_definitions)
             query_cost = query_cost * len(events)
 
-            print("Calculated query cost: " , query_cost)
+            print("Calculated query cost: ", query_cost)
 
         api_response = self._make_request(url, params)
 
