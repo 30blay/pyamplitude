@@ -75,6 +75,13 @@ class Event(object):
             return True
         else:
             return False
+
+    def add_measured_property(self, property_type, property_value):
+        """measured property is simply the first group_by"""
+        others = self.groupby
+        self.groupby.clear()
+        self.add_groupby(property_type, property_value)
+        self.groupby.append(others)
         
     def get_filters(self):
         return self.filters

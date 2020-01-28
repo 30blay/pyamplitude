@@ -138,7 +138,7 @@ class AmplitudeRestApi(object):
             error_message = 'Pyamplitude Error: An error ocurred when decoding requests response to json'
             self.logger.warn(error_message)
 
-            raise Exception(error_message + ' ' + response.reason)
+            raise Exception(error_message + ': ' + response.reason)
 
     def _validate_group_by_clause(self, segment_definitions, group_by):
         """ Group by clause validation """
@@ -352,6 +352,49 @@ class AmplitudeRestApi(object):
 
         return api_response
 
+    def get_property_metrics(self,
+                             start,
+                             end,
+                             events=[],
+                             mode='sums',
+                             interval='1',
+                             segment_definitions=[]):
+        if not self._check_date_parameters(start=start,end=end):
+            raise ValueError('Pyamplitude Error: _check_date_parameters:Wrong date parameters...')
+
+        endpoint = 'events/segmentation'
+        mode_options = ["histogram", "sums", "value_avg"]
+
+        if mode not in mode_options:
+            self.logger.warning('Pyamplitude Error: invalid option for m parameter, options: histogram, sums, value_avg')
+
+        url = self.api_url + endpoint
+        params = [('start', start), ('end', end), ('m', mode), ('i', str(interval))]
+
+        if len(events) == 1:
+            params.append(('e', str(events[0])))
+        elif len(events) == 2:
+            params.append(('e', str(events[0])))
+            params.append(('e2', str(events[1])))
+        else:
+            raise ValueError('Pyamplitude Error: get_events:Wrong number of events')
+
+        if segment_definitions is not None:
+            params.append(('s', self._segments_definition_str(segment_definitions)))
+
+        if self.show_query_cost:
+            query_cost = self._calculate_query_cost(start_date = start,
+                                                    end_date   = end,
+                                                    endpoint   = endpoint,
+                                                    segment_definitions = segment_definitions)
+            query_cost = query_cost * len(events)
+
+            print("Calculated query cost: ", query_cost)
+
+        api_response = self._make_request(url, params)
+
+        return api_response
+
     def get_events(self,
                    start,
                    end,
@@ -381,10 +424,10 @@ class AmplitudeRestApi(object):
            raise ValueError('Pyamplitude Error: _check_date_parameters:Wrong date parameters...')
 
         endpoint = 'events/segmentation'
-        mode_options = ['totals','uniques','avg','pct_dau']
+        mode_options = ['totals','uniques','avg','pct_dau','sums']
 
         if mode not in mode_options:
-            self.logger.warn('Pyamplitude Error: invalid option for m parameter, options: totals, uniques, avg, pct_dau')
+            self.logger.warn('Pyamplitude Error: invalid option for m parameter, options: totals, uniques, avg, pct_dau, sums')
 
         url = self.api_url + endpoint
         params = [('start', start), ('end', end), ('m', mode), ('i', str(interval))]
