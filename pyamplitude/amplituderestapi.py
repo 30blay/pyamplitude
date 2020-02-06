@@ -803,7 +803,7 @@ class AmplitudeRestApi(object):
                       end,
                       rm='n-day',
                       rb=None,
-                      interval='1',
+                      interval=1,
                       segment_definitions=[],
                       group_by=None):
         """ Get user retention for specific starting and returning actions.
@@ -858,8 +858,8 @@ class AmplitudeRestApi(object):
             error_message = None
             if rb is None:
                 error_message = 'Pyamplitude Error: get_retention: + parameter: rb required for rm = "bracket"'
-            elif not isinstance(rb, (list,)):
-                error_message = 'Pyamplitude Error: get_retention: + parameter: rb must be of type list'
+            # elif not isinstance(rb, (list,)):
+            #     error_message = 'Pyamplitude Error: get_retention: + parameter: rb must be of type list'
             if error_message is not None:
                 self.logger.error(error_message)
                 raise ValueError(error_message)
