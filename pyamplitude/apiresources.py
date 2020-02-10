@@ -39,7 +39,7 @@ class Event(object):
         self.event_type = event_type
         self.filters    = []
         self.groupby    = []
-        
+
     def __str__(self):
         return json.dumps({"event_type": self.event_type,
                            "filters": self.filters,
@@ -78,10 +78,10 @@ class Event(object):
 
     def add_measured_property(self, property_type, property_value):
         """measured property is simply the first group_by"""
-        others = self.groupby
+        others = self.groupby.copy()
         self.groupby.clear()
         self.add_groupby(property_type, property_value)
-        self.groupby.append(others)
+        self.groupby.extend(others)
         
     def get_filters(self):
         return self.filters
