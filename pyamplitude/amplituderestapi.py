@@ -407,7 +407,7 @@ class AmplitudeRestApi(object):
         Args:
                 events (required, multiple)	Events to retrieve data for (max 2).
 
-                mode (optional)	Either "totals", "uniques", "avg", or "pct_dau"
+                mode (optional)	Either "totals", "uniques", "avg", "sum" or "pct_dau"
                 to get the desired metric (default: "totals").
 
                 start (required)	First date included in data series,
