@@ -233,7 +233,7 @@ class AmplitudeRestApi(object):
             self.logger.error(error_message)
             raise ValueError(error_message)
 
-        if interval not in ['1', '7', '30']:
+        if interval not in ['1', '7', '30', '-300000', '-3600000']:
             error_message = 'Pyamplitude Error: get_active_and_new_user_count: + parameter: i must be Either 1, 7, or 30 for daily, weekly, and  monthly counts, respectively (default: 1)'
             self.logger.error(error_message)
             raise ValueError(error_message)
