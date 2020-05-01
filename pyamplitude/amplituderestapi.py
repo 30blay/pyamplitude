@@ -24,12 +24,12 @@ class AmplitudeRestApi(object):
 
     ERROR_CODES = ['401','400','429','500']
 
-    def __init__(self, project_handler, show_logs, show_query_cost, api_url='https://amplitude.com/api/2/'):
+    def __init__(self, project_handler, show_logs, log_query_cost, api_url='https://amplitude.com/api/2/'):
 
         self.project_handler = project_handler
         self.api_url         = api_url
         self.logger          = self._logger_config(show_logs)
-        self.show_query_cost = show_query_cost
+        self.show_query_cost = log_query_cost
 
     @staticmethod
     def _logger_config(show_logs):
@@ -250,7 +250,7 @@ class AmplitudeRestApi(object):
                                                     segment_definitions = segment_definitions,
                                                     group_by            = group_by)
 
-            print("Calculated query cost: ", query_cost)
+            self.log_query_cost(query_cost)
 
         url = self.api_url + endpoint
         params = [('start', start), ('end', end), ('m', m), ('i', str(interval))]
@@ -296,7 +296,7 @@ class AmplitudeRestApi(object):
                                                     endpoint   = endpoint,
                                                     segment_definitions = None)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -322,7 +322,7 @@ class AmplitudeRestApi(object):
                                                     endpoint   = endpoint,
                                                     segment_definitions = None)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -346,7 +346,7 @@ class AmplitudeRestApi(object):
                                                     endpoint   = endpoint,
                                                     segment_definitions = None)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -389,7 +389,7 @@ class AmplitudeRestApi(object):
                                                     segment_definitions = segment_definitions)
             query_cost = query_cost * len(events)
 
-            print("Calculated query cost: ", query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -447,10 +447,11 @@ class AmplitudeRestApi(object):
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
-                                                    segment_definitions = segment_definitions)
+                                                    segment_definitions = segment_definitions,
+                                                    group_by = events[0].groupby)
             query_cost = query_cost * len(events)
 
-            print("Calculated query cost: ", query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -503,7 +504,7 @@ class AmplitudeRestApi(object):
                                                     endpoint   = endpoint,
                                                     segment_definitions = None)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -566,7 +567,7 @@ class AmplitudeRestApi(object):
                                                     endpoint   = endpoint,
                                                     segment_definitions = None)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         url = self.api_url + endpoint
         params = [('user', user)]
@@ -630,7 +631,7 @@ class AmplitudeRestApi(object):
                                                     endpoint   = endpoint,
                                                     segment_definitions = None)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         url = self.api_url + endpoint
         params = [('i', str(interval))]
@@ -698,7 +699,7 @@ class AmplitudeRestApi(object):
                                                     segment_definitions = None,
                                                     group_by = group_by)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         url = self.api_url + endpoint + '/day'
         params = [('start', start), ('end', end), ('m', m), ('i', str(interval))]
@@ -769,7 +770,7 @@ class AmplitudeRestApi(object):
                                                    segment_definitions = None,
                                                    group_by = group_by)
 
-           print("Calculated query cost: ", query_cost)
+           self.log_query_cost(query_cost)
 
         if m not in m_options:
             self.logger.warn('Pyamplitude Error: invalid option for m   \
@@ -878,7 +879,7 @@ class AmplitudeRestApi(object):
                                                     segment_definitions = segment_definitions,
                                                     group_by = group_by)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -951,7 +952,7 @@ class AmplitudeRestApi(object):
                                                     group_by = group_by)
             query_cost = query_cost * len(e)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         api_response = self._make_request(url, params)
 
@@ -981,11 +982,14 @@ class AmplitudeRestApi(object):
                                                     endpoint   = endpoint,
                                                     segment_definitions = None)
 
-            print("Calculated query cost: " , query_cost)
+            self.log_query_cost(query_cost)
 
         url = self.api_url + endpoint
 
         api_response =  self._make_request(url)
 
         return api_response
+    
+    def log_query_cost(self, query_cost):
+        print('Calculated cost ' + str(query_cost))
 
