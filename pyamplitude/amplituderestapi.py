@@ -29,7 +29,7 @@ class AmplitudeRestApi(object):
         self.project_handler = project_handler
         self.api_url         = api_url
         self.logger          = self._logger_config(show_logs)
-        self.show_query_cost = log_query_cost
+        self.log_query_cost = log_query_cost
 
     @staticmethod
     def _logger_config(show_logs):
@@ -243,7 +243,7 @@ class AmplitudeRestApi(object):
 
         endpoint = 'users'
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date          = start,
                                                     end_date            = end,
                                                     endpoint            = endpoint,
@@ -290,7 +290,7 @@ class AmplitudeRestApi(object):
            raise ValueError('Pyamplitude Error: Check start & end date parameters...')
 
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -316,7 +316,7 @@ class AmplitudeRestApi(object):
         if not self._check_date_parameters(start=start,end=end):
            raise ValueError('Pyamplitude Error:  Wrong date parameters...')
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -340,7 +340,7 @@ class AmplitudeRestApi(object):
         if not self._check_date_parameters(start=start,end=end):
            raise ValueError('Pyamplitude Error:  Wrong date parameters...')
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -382,7 +382,7 @@ class AmplitudeRestApi(object):
         if segment_definitions is not None:
             params.append(('s', self._segments_definition_str(segment_definitions)))
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -443,7 +443,7 @@ class AmplitudeRestApi(object):
         if segment_definitions is not None:
             params.append(('s', self._segments_definition_str(segment_definitions)))
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -498,7 +498,7 @@ class AmplitudeRestApi(object):
         for x in proper:
             params.append(('p', x))
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -561,7 +561,7 @@ class AmplitudeRestApi(object):
 
         endpoint = 'useractivity'
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -625,7 +625,7 @@ class AmplitudeRestApi(object):
         endpoint = 'realtime'
 
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -692,7 +692,7 @@ class AmplitudeRestApi(object):
         self._validate_group_by_clause(segment_definitions, group_by)
         self._validate_segments_definition(segment_definitions)
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -763,7 +763,7 @@ class AmplitudeRestApi(object):
         endpoint = 'revenue'
         m_options = ['0','1','2','3']
 
-        if self.show_query_cost:
+        if self.log_query_cost:
            query_cost = self._calculate_query_cost(start_date = start,
                                                    end_date   = end,
                                                    endpoint   = endpoint,
@@ -872,7 +872,7 @@ class AmplitudeRestApi(object):
         if group_by is not None:
             params.append(('g', str(group_by)))
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -944,7 +944,7 @@ class AmplitudeRestApi(object):
         if group_by is not None:
             params.append(('g', str(group_by)))
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,
@@ -976,7 +976,7 @@ class AmplitudeRestApi(object):
 
         endpoint = 'annotations'
 
-        if self.show_query_cost:
+        if self.log_query_cost:
             query_cost = self._calculate_query_cost(start_date = start,
                                                     end_date   = end,
                                                     endpoint   = endpoint,

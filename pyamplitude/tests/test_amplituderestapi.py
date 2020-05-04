@@ -30,7 +30,7 @@ class Test_AmplitudeRestApi(unittest.TestCase):
 
         self.apiconector = AmplitudeRestApi(project_handler = myAPP,
                                             show_logs       = True,
-                                            show_query_cost = False)
+                                            log_query_cost = False)
 
     def _sanity_check(self, response):
         """ General assertion tests for each Amplitude REST requests"""

@@ -70,7 +70,7 @@ Great ! So let's use the Amplitude Rest Api to query some useful data for later 
 ```python
 apiconector = AmplitudeRestApi(project_handler = bubbleConector,
                                show_logs       = False,
-                               show_query_cost = False)
+                               log_query_cost = False)
 ```
 
 ### Creating and using segments
@@ -122,7 +122,7 @@ Other Resources: Session Length Distribution, Average Session Length, Average Se
 
 #### Using  calculate_query_cost = True parameter
 
-With PyAmplitude you can calculate each query cost very easily by checking the show_query_cost parameter. In an ETL context you may use this option not to exceed query limits. If you want to know more about how each query cost is being calculated, please read:
+With PyAmplitude you can calculate each query cost very easily by checking the log_query_cost parameter. In an ETL context you may use this option not to exceed query limits. If you want to know more about how each query cost is being calculated, please read:
 
 https://amplitude.zendesk.com/hc/en-us/articles/205469748-Dashboard-Rest-API-Export-Amplitude-Dashboard-Data#request-limits
 
