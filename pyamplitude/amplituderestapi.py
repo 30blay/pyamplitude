@@ -22,7 +22,7 @@ class AmplitudeRestApi(object):
 
     """
 
-    ERROR_CODES = ['401','400','429','500']
+    ERROR_CODES = ['401','400','429','500','503']
 
     def __init__(self, project_handler, show_logs, log_query_cost, api_url='https://amplitude.com/api/2/'):
 
