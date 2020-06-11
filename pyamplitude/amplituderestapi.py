@@ -5,9 +5,19 @@ import requests
 import logging
 import sys
 import simplejson as json
-import pandas as pd
 from datetime import datetime
 from .apiresources import Segment, Event
+from cachetools import TTLCache, cached
+
+
+CACHE_TTL_SEC = 60
+
+
+@cached(TTLCache(1, CACHE_TTL_SEC))
+def cached_request(url, json_params=None, auth=None):
+    """ params must be encoded to json so they can be hashed """
+    params = json.loads(json_params)
+    return requests.get(url, params=params, auth=auth)
 
 
 class AmplitudeRestApi(object):
@@ -124,10 +134,10 @@ class AmplitudeRestApi(object):
 
     def _make_request(self, url, params=None):
         """ Each AmplitudeRestAPI method return data by using _make_request"""
-        response = requests.get(url,
-                                params=params,
-                                auth=(self.project_handler.api_key,
-                                      self.project_handler.secret_key))
+        response = cached_request(url,
+                                  json_params=json.dumps(params),
+                                  auth=(self.project_handler.api_key,
+                                        self.project_handler.secret_key))
 
         error_message = 'Pyamplitude Error: ' + str(response.text)
 
