@@ -31,8 +31,6 @@ class AmplitudeRestApi(object):
 
     """
 
-    ERROR_CODES = ['401', '400', '429', '500', '503', '504']
-
     def __init__(self, project_handler, show_logs, log_query_cost, api_url='https://amplitude.com/api/2/'):
 
         self.project_handler = project_handler
@@ -140,14 +138,10 @@ class AmplitudeRestApi(object):
 
         error_message = 'Pyamplitude Error: ' + str(response.text)
 
-        if str(response.status_code) not in AmplitudeRestApi.ERROR_CODES:
-            data = json.loads(response.text)
-            return data
-        else:
-            error_message = 'Pyamplitude Error: An error ocurred when decoding requests response to json'
-            self.logger.warn(error_message)
+        response.raise_for_status()
+        data = json.loads(response.text)
+        return data
 
-            raise Exception(error_message + ': ' + response.reason)
 
     def _validate_group_by_clause(self, segment_definitions, group_by):
         """ Group by clause validation """
