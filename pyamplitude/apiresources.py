@@ -23,7 +23,7 @@ class Segment(object):
             (op in op_options) and
             isinstance(values, (list,))):
            self.filters.append({'prop':prop, 'op':op, 'values':values})
-           return True
+           return self
         else:
             return False
 
@@ -61,7 +61,7 @@ class Event(object):
                                  "subprop_key": subprop_key,
                                  "subprop_op": subprop_op,
                                  "subprop_value": subprop_values})
-            return True
+            return self
         else:
             return False
         
@@ -72,7 +72,7 @@ class Event(object):
             isinstance(groupby_value, (str,))):
             self.groupby.append({"type": groupby_type,
                                  "value": groupby_value})
-            return True
+            return self
         else:
             return False
 
@@ -82,6 +82,8 @@ class Event(object):
         self.groupby.clear()
         self.add_groupby(property_type, property_value)
         self.groupby.extend(others)
+        
+        return self
         
     def get_filters(self):
         return self.filters
