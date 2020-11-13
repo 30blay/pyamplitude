@@ -50,7 +50,7 @@ class Event(object):
         subprop_type_options = ["event", "user"]
         subprop_op_options   = ["is", "is not", "contains", "does not contain",
                                 "less", "less or equal", "greater", "greater or equal",
-                                "set is", "set is not"]
+                                "set is", "set is not", "set contains", "set does not contain"]
         if (isinstance(subprop_type, (str,)) and
             (subprop_type in subprop_type_options) and
             isinstance(subprop_key, (str,)) and
