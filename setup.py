@@ -15,7 +15,10 @@ setup(
     author='Marcos Manuel Muraro',
     author_email='mmmuraro@gmail.com',
     license='MIT',
-
+    install_requires=[
+        'simplejson',
+        'cachetools',
+    ],
     classifiers=[
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
