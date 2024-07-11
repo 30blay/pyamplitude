@@ -402,7 +402,8 @@ class AmplitudeRestApi(object):
                    events=[],
                    mode='totals',
                    interval='1',
-                   segment_definitions=[]):
+                   segment_definitions=[],
+                   limit=1000):
         """ Get totals, uniques, averages, or DAU for multiple events at once.
 
         Args:
@@ -432,7 +433,7 @@ class AmplitudeRestApi(object):
                 'Pyamplitude Error: invalid option for m parameter, options: totals, uniques, avg, pct_dau, sums')
 
         url = self.api_url + endpoint
-        params = [('start', start), ('end', end), ('m', mode), ('i', str(interval))]
+        params = [('start', start), ('end', end), ('m', mode), ('i', str(interval)), ('limit', str(limit))]
 
         if len(events) == 1:
             params.append(('e', str(events[0])))
